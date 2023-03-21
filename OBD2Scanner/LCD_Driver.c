@@ -1,22 +1,20 @@
-/*TivaC LaunchPad Pin	HD44780U LCD Pin
-TivaC LCD  LCD Abbrev.
-  	  Pin1  GND
-   	  Pin2  V+
+/*TivaC LCD  LCD Abbrev.
+      Pin1  GND
+      Pin2  V+
       Pin3  Contrast
-PB1	  Pin4  RS
+PB1   Pin4  RS
       Pin5  RW
-PB0	  Pin6  E  
-			Pin7  D0
-			Pin8  D1
-			Pin9  D2
-			Pin10 D3
-PB4	  Pin11 D4
-PB5	  Pin12 D5
-PB6	  Pin13 D6
-PB7	  Pin14 D7
+PB0   Pin6  E  
+      Pin7  D0
+      Pin8  D1
+      Pin9  D2
+      Pin10 D3
+PB4   Pin11 D4
+PB5   Pin12 D5
+PB6   Pin13 D6
+PB7   Pin14 D7
       Pin15 Backlight V+
-      Pin16 Backlight GND
-*/
+      Pin16 Backlight GND*/
 
 #include <stdbool.h>
 #include <stdint.h>
