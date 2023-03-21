@@ -28,15 +28,12 @@ PB7	  Pin14 D7
 #include "utils/uartstdio.h"
 #include "driverlib/tm4c123gh6pm.h"/* include register defintion file of TM4C123GH6PM */
 #include "driverlib/LCD_Driver.h"
-
-/* prototypes of LCD functions */
-//void delay_ms(int n); /* mili second delay function */
-//void delay_us(int n); /* micro second delay function */ 
+ 
 void LCD_init(void);  /* LCD initialization function */
 void sendStrToLCD(char *str);	/* Send string to LCD function */
 void pulseLCDEnable(void);
 void sendNibbleToLCD(uint8_t nibble);
-void sendDataToLCD(uint8_t value); //writes ASCII character
+void sendDataToLCD(uint8_t value); / *writes ASCII character */
 void sendCMDToLCD(uint8_t command); /*Used to send commands to LCD */
 
 /* Defualt LCD and GPIOB initialization Function (10 ms before able to submit instructions)
@@ -73,7 +70,6 @@ void LCD_init(void){
     pulseLCDEnable();
     SysCtlDelay(20373333); //>1.52ms for extra long execution time of return home instruction
 		           
-    
     GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x00); //display on/off control first nibble
     pulseLCDEnable();
     GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0xC0); //display on/off control second nibble
@@ -86,14 +82,15 @@ void LCD_init(void){
     
     GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x40); //'H'
     pulseLCDEnable();
-		GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x80);
-		pulseLCDEnable();
+    GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x80);
+    pulseLCDEnable();
 		
     GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x40); //'I'
     pulseLCDEnable();
-		GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x90); //
+    GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x90); //
     pulseLCDEnable();
 }
+
 void pulseLCDEnable() {
 	GPIOPinWrite(GPIO_PORTB_BASE, EN, EN); //enable high
 	SysCtlDelay(8); //pulse width > 450ns
