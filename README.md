@@ -1,9 +1,14 @@
 # EK-TM4C123GXL
-Tiva C Series TM4C123GXL LaunchPad. Includes: LCD library for HD44780U LCD Display (16x2 implementation).
+Tiva C Series TM4C123GXL LaunchPad Projects. Includes: LCD library for HD44780U LCD Display (16x2 implementation).
 
 ### Successful initialization:
 
 ![DisplayHI](https://user-images.githubusercontent.com/112997769/226772720-25589d87-6fe0-4b9a-bb4f-caab1d4b0e87.jpg)
+
+### Helpful resources for getting started:
+- [SparkFun Basic LCD tutorial](tutorials/basic-character-lcd-hookup-guide)
+
+- [Datasheet walkthrough and programming by hand](https://www.youtube.com/watch?v=cXpeTxC3_A4)
 
 ### Troubleshooting LCD: Ensure contrast is set correctly.
 
