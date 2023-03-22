@@ -1,10 +1,12 @@
 # EK-TM4C123GXL
 Tiva C Series TM4C123GXL LaunchPad. Includes: LCD library for HD44780U LCD Display (16x2 implementation).
+
 Successful initialization:
 
 ![DisplayHI](https://user-images.githubusercontent.com/112997769/226772129-79a9f26b-f8bc-448c-b1a4-683dd663bb92.jpg)
 
 Troubleshooting LCD: Ensure contrast is set correctly.
+
 Contrast that is set too low will show no characters:
 
 ![MinContrast](https://user-images.githubusercontent.com/112997769/226772158-05beb381-325a-400b-8d9a-f5eafc7462d4.jpg)
