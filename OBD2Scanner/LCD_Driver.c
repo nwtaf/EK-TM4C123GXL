@@ -47,33 +47,40 @@ void sendStr(char *str); //sends a string (array of chars that is null ('\0') te
 void LCD_init(void){
 	char str1[] = "Hello, World!";
 	char *HW = str1;
+	char str2[] = "Second Row!";
 	
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); //Enable the GPIOB peripheral, including enabling the clock to GPIOB. Function takes 5 clock cycles.
-	while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB)) {} //Wait for the GPIOB module to be ready
-	UARTprintf("GPIOB module Ready. \n");
-	SysCtlDelay(400000); //delay for 10ms to let default LCD reset/power on sequence finish
-	GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, D4 | D5 | D6 | D7 | RS | EN);
-	GPIOPinWrite(GPIO_PORTB_BASE, D4 | D5 | D6 | D7 | RS | EN, 0x00); //RS low for instruction writes
-	SysCtlDelay(1); //>40ns for address set-up time (RS)
-	GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x20); //4 bit mode (this is the only 8 bit command, make sure D3..D0 are grounded)
-	pulseLCDEnable();
-	GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, 0x20); //function set
-	pulseLCDEnable();
-	sendInstruction(0x01); //clear display
-	sendInstruction(0x02); //return home
-	SysCtlDelay(20373333); //>1.52ms for extra long execution time of return home instruction
-	sendInstruction(0x0C); //display on/off control 
-	GPIOPinWrite(GPIO_PORTB_BASE, RS, RS); //RS high for data writes
-	SysCtlDelay(1); //>40ns for address set-up time (RS)
-	UARTprintf("LCD initialization successful... \n");
-	sendStr(HW);//pointer will work
-	//sendStr(str1);//idk if this will work
-	/*sendChar('H');
-	sendChar('E');
-	sendChar('L');
-	sendChar('L');
-	sendChar('0');*/
+    	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); //Enable the GPIOB peripheral, including enabling the clock to GPIOB. Function takes 5 clock cycles.
+    	while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB)) {} //Wait for the GPIOB module to be ready
+    	UARTprintf("GPIOB module Ready. \n");
+
+    	SysCtlDelay(400000); //delay for 10ms to let default LCD reset/power on sequence finish
+    
+    	GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, D4 | D5 | D6 | D7 | RS | EN);
+    	GPIOPinWrite(GPIO_PORTB_BASE, D4 | D5 | D6 | D7 | RS | EN, 0x00); //RS low for instruction writes
+    	SysCtlDelay(1); //>40ns for address set-up time (RS)
+    
+	GPIOPinWrite(GPIO_PORTB_BASE, D7| D6 | D5 | D4, FunctionSet4Bit); //0x20 function set: 4 bit mode (this is the only 8 bit command, make sure D3..D0 are grounded)
+    	pulseLCDEnable();
+			
+	sendInstruction(ClearDisplay); //0x01 clear display
+			
+	sendInstruction(ReturnHome); //0x02 return home
+    	SysCtlDelay(20373333); //>1.52ms for extra long execution time of return home instruction
+		           
+    	sendInstruction(DisplayOn); //0x0C display on/off control 
+    
+    	GPIOPinWrite(GPIO_PORTB_BASE, RS, RS); //RS high for data writes
+    	SysCtlDelay(1); //>40ns for address set-up time (RS)
+    
+    	UARTprintf("LCD initialization successful... \n");
+		
+	//sendStr(HW);//pointer (both work)
+	sendStr(str1);//string name (both work)
+	sendInstruction(MoveCursorStartRow2); //0xC0 enables setting DDRAM address and sets it to second row
+	SysCtlDelay(8);
+	sendStr(str2);
 }
+
 void pulseLCDEnable() {
 	GPIOPinWrite(GPIO_PORTB_BASE, EN, EN); //enable high
 	SysCtlDelay(8); //pulse width > 450ns
@@ -105,6 +112,6 @@ void sendInstruction(uint8_t instruction){
 void sendStr(char *str){
 	int i;
 	for (i = 0; i < strlen(str); i++) {
-        	sendChar(str[i]);
+        sendChar(str[i]);
+    }
 	}
-}
