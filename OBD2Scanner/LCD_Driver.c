@@ -103,7 +103,8 @@ void sendInstruction(uint8_t instruction){
 }
 
 void sendStr(char *str){
-	for (int i = 0; i < strlen(str); i++) {
+	int i;
+	for (i = 0; i < strlen(str); i++) {
         	sendChar(str[i]);
 	}
 }
